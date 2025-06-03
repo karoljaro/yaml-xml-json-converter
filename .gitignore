@@ -195,6 +195,14 @@ cython_debug/
 
 # Project specific test files
 test_*.json
+test_*.yaml
+test_*.yml
 output_*.json
+output_*.yaml
+output_*.yml
 *_test.json
+*_test.yaml
+*_test.yml
 sample_*.json
+sample_*.yaml
+sample_*.yml
