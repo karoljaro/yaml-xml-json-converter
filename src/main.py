@@ -2,6 +2,7 @@ import argparse
 from pathlib import Path
 import sys
 from parsers.json_parser import JSONParser
+from parsers.yaml_parser import YAMLParser
 
 def validate_files(input_path: Path, output_path: Path) -> None:
     """Validate input and output file paths."""
@@ -37,23 +38,33 @@ def process_conversion(input_path: Path, output_path: Path, output_format: str) 
     print(f"Detected input format: {input_format.upper()}")
     print(f"Target output format: {output_format.upper()}")
     
+    # Load data based on input format
     if input_format == 'json':
-        try:
-            print("Reading JSON file...")
-            data = JSONParser.load(input_path)
-            print(f"Successfully loaded JSON with {len(data)} top-level keys")
-            
-            if output_format == 'json':
-                print("Saving as JSON...")
-                JSONParser.save(data, output_path)
-                print(f"JSON file saved successfully to: {output_path}")
-            else:
-                print(f"TODO: {output_format.upper()} output not yet implemented")
-                
-        except Exception as e:
-            raise ValueError(f"Error processing JSON file: {e}")
+        print("Reading JSON file...")
+        data = JSONParser.load(input_path)
+        print(f"Successfully loaded JSON with {len(data)} top-level keys")
+    elif input_format == 'yaml':
+        print("Reading YAML file...")
+        data = YAMLParser.load(input_path)
+        print(f"Successfully loaded YAML with {len(data)} top-level keys")
     else:
-        print(f"TODO: {input_format.upper()} input not yet implemented")
+        raise ValueError(f"TODO: {input_format.upper()} input not yet implemented")
+    
+    # Save data based on output format
+    try:
+        if output_format == 'json':
+            print("Saving as JSON...")
+            JSONParser.save(data, output_path)
+            print(f"JSON file saved successfully to: {output_path}")
+        elif output_format == 'yaml':
+            print("Saving as YAML...")
+            YAMLParser.save(data, output_path)
+            print(f"YAML file saved successfully to: {output_path}")
+        else:
+            raise ValueError(f"TODO: {output_format.upper()} output not yet implemented")
+            
+    except Exception as e:
+        raise ValueError(f"Error processing {input_format.upper()} to {output_format.upper()} conversion: {e}")
 
 def main() -> None:
     parser = argparse.ArgumentParser(

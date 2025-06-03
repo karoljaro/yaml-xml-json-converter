@@ -39,14 +39,21 @@ python src\main.py input_file output_file --format target_format
 ### Examples
 
 ```bash
-# Convert JSON to YAML
+# Convert JSON to YAML (✅ Available)
 python src\main.py data.json data.yaml --format yaml
 
-# Convert XML to JSON
-python src\main.py config.xml config.json --format json
+# Convert YAML to JSON (✅ Available)
+python src\main.py config.yaml config.json --format json
 
-# Convert YAML to XML
-python src\main.py settings.yaml settings.xml --format xml
+# Convert JSON to JSON (✅ Available - validation/formatting)
+python src\main.py input.json output.json --format json
+
+# Convert YAML to YAML (✅ Available - validation/formatting)
+python src\main.py input.yaml output.yaml --format yaml
+
+# XML conversions (🔄 Coming in Phase 4)
+# python src\main.py config.xml config.json --format json
+# python src\main.py settings.yaml settings.xml --format xml
 ```
 
 ## Supported Formats
@@ -64,17 +71,21 @@ python src\main.py settings.yaml settings.xml --format xml
 - ✅ File path validation
 - ✅ Error handling and user feedback
 - ✅ **JSON Parser Module** - Complete JSON read/write functionality
+- ✅ **YAML Parser Module** - Complete YAML read/write functionality
 - ✅ **Type Safety** - MyPy configuration and type annotations
-- ✅ **Unit Testing** - Comprehensive test suite for JSON operations
+- ✅ **Unit Testing** - Comprehensive test suite for JSON and YAML operations
 - ✅ **UTF-8 Support** - Full Unicode character handling
+- ✅ **Format Conversion** - JSON ↔ YAML bidirectional conversion
 
 ### Current Capabilities
 - **JSON Processing**: Load, save, validate JSON files with proper error handling
-- **Data Normalization**: Automatic conversion of non-dict JSON to dict format
-- **File Information**: Extract metadata and validation status from JSON files
+- **YAML Processing**: Load, save, validate YAML files with PyYAML integration
+- **Format Conversion**: Convert between JSON and YAML formats seamlessly
+- **Data Normalization**: Automatic conversion of non-dict data to dict format
+- **File Information**: Extract metadata and validation status from files
+- **YAML Features**: Support for multiline strings, comments, and YAML-specific syntax
 
 ### Planned Features
-- 🔄 YAML parser and writer
 - 🔄 XML parser and writer
 - 🔄 Format auto-detection
 - 🔄 Batch conversion support
@@ -151,4 +162,41 @@ is_valid = JSONParser.validate(Path("file.json"))
 
 # Get file information
 info = JSONParser.get_file_info(Path("file.json"))
+```
+
+### YAMLParser Class
+
+The `YAMLParser` class provides static methods for YAML file operations:
+
+```python
+from parsers.yaml_parser import YAMLParser
+from pathlib import Path
+
+# Load YAML file
+data = YAMLParser.load(Path("input.yaml"))
+
+# Save data to YAML file (with proper formatting)
+YAMLParser.save(data, Path("output.yaml"))
+
+# Validate YAML file
+is_valid = YAMLParser.validate(Path("file.yaml"))
+
+# Get file information
+info = YAMLParser.get_file_info(Path("file.yaml"))
+```
+
+### Format Conversion Example
+
+```python
+from parsers.json_parser import JSONParser
+from parsers.yaml_parser import YAMLParser
+from pathlib import Path
+
+# Load JSON and save as YAML
+json_data = JSONParser.load(Path("data.json"))
+YAMLParser.save(json_data, Path("data.yaml"))
+
+# Load YAML and save as JSON
+yaml_data = YAMLParser.load(Path("config.yaml"))
+JSONParser.save(yaml_data, Path("config.json"))
 ```
