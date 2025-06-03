@@ -18,7 +18,7 @@ def validate_files(input_path: Path, output_path: Path) -> None:
 def main():
     parser = argparse.ArgumentParser(
         description="YAML, XML, JSON format converter",
-        epilog="Example: python src\main.py input.json output.yaml --format yaml"
+        epilog=r"Example: python src\main.py input.json output.yaml --format yaml"
     )
     parser.add_argument("input_file", help="Input file path")
     parser.add_argument("output_file", help="Output file path")
