@@ -1,2 +1,5 @@
 pytest
 pytest-cov
+PyYAML
+mypy
+types-PyYAML
