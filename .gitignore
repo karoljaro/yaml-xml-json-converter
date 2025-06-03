@@ -197,12 +197,16 @@ cython_debug/
 test_*.json
 test_*.yaml
 test_*.yml
+test_*.xml
 output_*.json
 output_*.yaml
 output_*.yml
+output_*.xml
 *_test.json
 *_test.yaml
 *_test.yml
+*_test.xml
 sample_*.json
 sample_*.yaml
 sample_*.yml
+sample_*.xml

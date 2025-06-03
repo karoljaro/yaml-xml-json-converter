@@ -1,8 +1,9 @@
 import argparse
 from pathlib import Path
 import sys
-from parsers.json_parser import JSONParser
-from parsers.yaml_parser import YAMLParser
+from parsers.json_parser import JSONParser # type: ignore
+from parsers.yaml_parser import YAMLParser # type: ignore
+from parsers.xml_parser import XMLParser # type: ignore
 
 def validate_files(input_path: Path, output_path: Path) -> None:
     """Validate input and output file paths."""
@@ -37,8 +38,6 @@ def process_conversion(input_path: Path, output_path: Path, output_format: str) 
     
     print(f"Detected input format: {input_format.upper()}")
     print(f"Target output format: {output_format.upper()}")
-    
-    # Load data based on input format
     if input_format == 'json':
         print("Reading JSON file...")
         data = JSONParser.load(input_path)
@@ -47,10 +46,12 @@ def process_conversion(input_path: Path, output_path: Path, output_format: str) 
         print("Reading YAML file...")
         data = YAMLParser.load(input_path)
         print(f"Successfully loaded YAML with {len(data)} top-level keys")
+    elif input_format == 'xml':
+        print("Reading XML file...")
+        data = XMLParser.load(input_path)
+        print(f"Successfully loaded XML with {len(data)} top-level keys")
     else:
         raise ValueError(f"TODO: {input_format.upper()} input not yet implemented")
-    
-    # Save data based on output format
     try:
         if output_format == 'json':
             print("Saving as JSON...")
@@ -60,6 +61,10 @@ def process_conversion(input_path: Path, output_path: Path, output_format: str) 
             print("Saving as YAML...")
             YAMLParser.save(data, output_path)
             print(f"YAML file saved successfully to: {output_path}")
+        elif output_format == 'xml':
+            print("Saving as XML...")
+            XMLParser.save(data, output_path)
+            print(f"XML file saved successfully to: {output_path}")
         else:
             raise ValueError(f"TODO: {output_format.upper()} output not yet implemented")
             
