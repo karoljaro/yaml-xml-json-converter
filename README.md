@@ -1,13 +1,20 @@
 # YAML/XML/JSON Format Converter
 
-A command-line tool for converting between YAML, XML, and JSON file formats.
+A command-line tool for converting between YAML, XML, and JSON file formats with full bidirectional conversion support.
 
 ## Features
 
-- Convert between JSON, YAML, and XML formats
-- Automatic file validation
-- Error handling with descriptive messages
-- Cross-platform compatibility
+- **Complete Format Support**: Convert between JSON, YAML, and XML formats
+- **Bidirectional Conversion**: Full support for all format combinations (JSON↔YAML↔XML)
+- **XML Advanced Features**: 
+  - Attributes handling with `@` prefix notation
+  - Text content with `#text` notation
+  - Namespace support
+  - Pretty-printed output
+- **Automatic File Validation**: Built-in format validation for all supported types
+- **Error Handling**: Descriptive error messages and proper exception handling
+- **Cross-platform Compatibility**: Works on Windows, Linux, and macOS
+- **Type Safety**: Full MyPy type checking support
 
 ## Installation
 
@@ -45,6 +52,18 @@ python src\main.py data.json data.yaml --format yaml
 # Convert YAML to JSON (✅ Available)
 python src\main.py config.yaml config.json --format json
 
+# Convert JSON to XML (✅ Available)
+python src\main.py data.json data.xml --format xml
+
+# Convert XML to JSON (✅ Available)
+python src\main.py config.xml config.json --format json
+
+# Convert YAML to XML (✅ Available)
+python src\main.py config.yaml config.xml --format xml
+
+# Convert XML to YAML (✅ Available)
+python src\main.py data.xml data.yaml --format yaml
+
 # Convert JSON to JSON (✅ Available - validation/formatting)
 python src\main.py input.json output.json --format json
 
@@ -64,32 +83,75 @@ python src\main.py input.yaml output.yaml --format yaml
 
 ## Development Status
 
-🚧 **Work in Progress** - Currently implementing core conversion functionality.
+✅ **Phase 4 Complete** - All core conversion functionality implemented and tested.
 
 ### Completed Features
 - ✅ CLI interface with argument parsing
-- ✅ File path validation
+- ✅ File path validation and automatic directory creation
 - ✅ Error handling and user feedback
 - ✅ **JSON Parser Module** - Complete JSON read/write functionality
-- ✅ **YAML Parser Module** - Complete YAML read/write functionality
+- ✅ **YAML Parser Module** - Complete YAML read/write functionality with PyYAML
+- ✅ **XML Parser Module** - Complete XML read/write functionality with attributes and namespaces
 - ✅ **Type Safety** - MyPy configuration and type annotations
-- ✅ **Unit Testing** - Comprehensive test suite for JSON and YAML operations
+- ✅ **Unit Testing** - Comprehensive test suite (39 tests total)
 - ✅ **UTF-8 Support** - Full Unicode character handling
-- ✅ **Format Conversion** - JSON ↔ YAML bidirectional conversion
+- ✅ **Bidirectional Conversion** - All format combinations (JSON↔YAML↔XML)
 
 ### Current Capabilities
 - **JSON Processing**: Load, save, validate JSON files with proper error handling
 - **YAML Processing**: Load, save, validate YAML files with PyYAML integration
-- **Format Conversion**: Convert between JSON and YAML formats seamlessly
+- **XML Processing**: Load, save, validate XML files with attributes (`@prefix`) and text content (`#text`)
+- **Format Conversion**: Convert between JSON, YAML, and XML formats seamlessly
 - **Data Normalization**: Automatic conversion of non-dict data to dict format
-- **File Information**: Extract metadata and validation status from files
-- **YAML Features**: Support for multiline strings, comments, and YAML-specific syntax
+- **File Information**: Extract metadata and validation status from all supported formats
+- **Advanced XML Features**: 
+  - XML attributes handling with `@` prefix notation
+  - Text content with `#text` notation
+  - Multiple elements with same tag (converted to arrays)
+  - Namespace preservation
+  - Pretty-printed output with proper indentation
 
-### Planned Features
-- 🔄 XML parser and writer
-- 🔄 Format auto-detection
-- 🔄 Batch conversion support
-- 🔄 Configuration file support
+### Test Coverage
+- **JSON Parser**: 12 comprehensive tests
+- **YAML Parser**: 10 comprehensive tests  
+- **XML Parser**: 17 comprehensive tests
+- **Total**: 39 tests covering all functionality
+
+### XML Conversion Examples
+
+The XML parser handles complex structures including attributes and text content:
+
+```xml
+<!-- Input XML -->
+<book id="123" isbn="978-0123456789">
+    <title>Python Programming</title>
+    <author>Jane Smith</author>
+    <price currency="USD">29.99</price>
+</book>
+```
+
+```json
+// Converted to JSON
+{
+  "book": {
+    "@id": "123",
+    "@isbn": "978-0123456789", 
+    "title": "Python Programming",
+    "author": "Jane Smith",
+    "price": {
+      "@currency": "USD",
+      "#text": "29.99"
+    }
+  }
+}
+```
+
+### Future Enhancements
+- 🔄 Format auto-detection based on content analysis
+- 🔄 Batch conversion support for multiple files
+- 🔄 Configuration file support for custom conversion rules
+- 🔄 Validation against XML Schema/JSON Schema
+- 🔄 Custom XML namespace handling
 
 ## Contributing
 
