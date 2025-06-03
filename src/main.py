@@ -55,7 +55,7 @@ def process_conversion(input_path: Path, output_path: Path, output_format: str) 
     else:
         print(f"TODO: {input_format.upper()} input not yet implemented")
 
-def main():
+def main() -> None:
     parser = argparse.ArgumentParser(
         description="YAML, XML, JSON format converter",
         epilog=r"Example: python src\main.py input.json output.yaml --format yaml"

@@ -31,9 +31,11 @@ class JSONParser:
         """
         try:
             with open(file_path, 'r', encoding='utf-8') as file:
-                data = json.load(file)
-                if not isinstance(data, dict):
-                    data = {"data": data}
+                loaded_data: Any = json.load(file)
+                if not isinstance(loaded_data, dict):
+                    data: Dict[str, Any] = {"data": loaded_data}
+                else:
+                    data = loaded_data
                 return data
         except FileNotFoundError:
             raise FileNotFoundError(f"JSON file not found: {file_path}")
