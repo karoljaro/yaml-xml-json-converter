@@ -12,7 +12,7 @@ import sys
 
 sys.path.append(str(Path(__file__).parent.parent / "src"))
 
-from parsers.xml_parser import XMLParser # type: ignore
+from src.parsers.xml_parser import XMLParser
 
 
 class TestXMLParser:

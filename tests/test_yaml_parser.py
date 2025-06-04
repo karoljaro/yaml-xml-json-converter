@@ -12,7 +12,7 @@ import sys
 
 sys.path.append(str(Path(__file__).parent.parent / "src"))
 
-from parsers.yaml_parser import YAMLParser # type: ignore
+from src.parsers.yaml_parser import YAMLParser
 
 
 class TestYAMLParser:

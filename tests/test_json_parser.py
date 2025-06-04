@@ -12,7 +12,7 @@ import sys
 
 sys.path.append(str(Path(__file__).parent.parent / "src"))
 
-from parsers.json_parser import JSONParser # type: ignore
+from src.parsers.json_parser import JSONParser
 
 
 class TestJSONParser:
