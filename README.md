@@ -149,15 +149,6 @@ The XML parser handles complex structures including attributes and text content:
 }
 ```
 
-## Contributing
-
-This project uses Git branching for feature development:
-
-1. Create feature branch: `git checkout -b feature/your-feature`
-2. Make changes and commit
-3. Push branch: `git push origin feature/your-feature`
-4. Create Pull Request
-
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
